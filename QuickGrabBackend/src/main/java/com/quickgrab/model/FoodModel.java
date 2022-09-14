@@ -31,6 +31,8 @@ public class FoodModel {
 	private String food_type;
 	@Column(name = "rest_id")
 	private Integer restId;
+//	@Column(name = "order_id")
+//	private Integer orderId;
 
 
 }

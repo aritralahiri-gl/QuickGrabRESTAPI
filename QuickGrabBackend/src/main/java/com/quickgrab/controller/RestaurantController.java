@@ -22,7 +22,7 @@ import com.quickgrab.service.RestaurantService;
 @RequestMapping("/restaurant")
 public class RestaurantController {
 	@Autowired
-	RestaurantService restaurantService;
+	private RestaurantService restaurantService;
 
 	@PostMapping
 	public ResponseEntity<RestaurantModel> signUpRestaurant(@RequestBody RestaurantModel restaurant) {

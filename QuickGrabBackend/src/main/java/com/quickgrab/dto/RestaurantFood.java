@@ -1,11 +1,5 @@
 package com.quickgrab.dto;
 
-
-
-
-
-
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -32,15 +26,14 @@ import lombok.ToString;
 
 public class RestaurantFood {
 
- private String restName;
+	private String restName;
 
- private String restAddress;
+	private String restAddress;
 
- private String restContact;
+	private String restContact;
 
- private String foodName;
+	private String foodName;
 
- private float foodPrice;
+	private float foodPrice;
 
 }
-

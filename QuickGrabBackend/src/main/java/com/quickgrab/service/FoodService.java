@@ -13,7 +13,7 @@ import com.quickgrab.repository.FoodRepo;
 public class FoodService {
 
 	@Autowired
-	FoodRepo foodRepo;
+	private FoodRepo foodRepo;
 
 	public ResponseEntity<FoodModel> createFood(FoodModel food) {
 		foodRepo.save(food);

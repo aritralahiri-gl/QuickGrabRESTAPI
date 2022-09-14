@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.quickgrab.dto.RestaurantFood;
 import com.quickgrab.model.CustomerModel;
 import com.quickgrab.model.FoodModel;
-import com.quickgrab.model.RestaurantModel;
+
 import com.quickgrab.repository.CustomerRepo;
 import com.quickgrab.service.CustomerService;
 
@@ -22,10 +22,10 @@ import com.quickgrab.service.CustomerService;
 public class CustomerController {
 
 	@Autowired
-	CustomerService customerService;
+	private CustomerService customerService;
 
 	@Autowired
-	CustomerRepo customerRepo;
+	private CustomerRepo customerRepo;
 
 	@PostMapping
 	public CustomerModel signUpCustomer(@RequestBody CustomerModel customer) {
@@ -39,21 +39,6 @@ public class CustomerController {
 		return customerService.getallfood();
 
 	}
-
-	@GetMapping("/{foodId}")
-	public RestaurantModel showFood(@PathVariable Integer foodId) {
-		return customerService.getFoodById(foodId);
-	}
-
-//	@GetMapping("/getInfo/{foodId}")
-//
-//
-//
-//	 public List<RestaurantFood> getJointInformation(@PathVariable int foodId){
-//
-//	 return customerRepo.getJoinInformation(foodId);
-//
-//	 }
 
 	@GetMapping("/getFood/{id}")
 

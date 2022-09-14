@@ -12,36 +12,35 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
 import lombok.NoArgsConstructor;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "OrderDetails")
 @Data
-@Table(name = "Customer")
-
-public class CustomerModel {
-
+public class OrderModel {
+	
+//	@Column(name = "order_id")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "order_id")
+	private int orderId;
+	@Column(name = "quantity")
+	private int quantity;
+	@Column(name = "order_price")
+	private int orderPrice;
+	@OneToMany(cascade = {CascadeType.ALL})
+	@JoinColumn(name = "order_id", referencedColumnName = "order_id")
+	private List<FoodModel> foodModel;
 	@Column(name = "cust_id")
 	private int custId;
-	@Column(name = "cust_name")
-	private String custName;
-	@Column(name = "cust_pass")
-	private String custPass;
-	@Column(name = "cust_address")
-	private String custAddress;
-	@Column(name = "cust_contact")
-	private String custContact;
-	@Column(name = "cust_email")
-	private String custEmail;
-	@OneToMany(cascade = {CascadeType.ALL})
-	@JoinColumn(name = "cust_id", referencedColumnName = "cust_id")
-	private List<OrderModel> orderModel;
+	
+	
 	
 
 }

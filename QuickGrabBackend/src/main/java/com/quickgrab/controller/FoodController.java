@@ -16,12 +16,12 @@ import com.quickgrab.service.FoodService;
 public class FoodController {
 	
 	@Autowired
-	FoodService foodService;
+	private FoodService foodService;
 	
 	@PostMapping
 	public ResponseEntity<FoodModel> createFood(@RequestBody FoodModel food){
 		return foodService.createFood(food);
 	}
-	///vfffvvf
+
 
 }

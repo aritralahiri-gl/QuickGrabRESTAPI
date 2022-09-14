@@ -18,9 +18,9 @@ import com.quickgrab.repository.RestaurantRepo;
 public class RestaurantService {
 
 	@Autowired
-	RestaurantRepo restaurantRepo;
+	private RestaurantRepo restaurantRepo;
 	@Autowired
-	FoodRepo foodRepo;
+	private FoodRepo foodRepo;
 
 	public ResponseEntity<RestaurantModel> addFood(Integer id, FoodModel foodModel) {
 
