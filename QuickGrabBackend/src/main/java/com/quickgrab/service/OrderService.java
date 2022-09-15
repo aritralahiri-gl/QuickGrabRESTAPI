@@ -32,6 +32,8 @@ public class OrderService {
 
 		OrderModel orderModel = orderRepo.findById(orderId).orElse(null);
 		FoodModel foodModel = foodRepo.findById(foodId).orElse(null);
+		float orderPrice = orderModel.getOrderPrice();
+		orderModel.setOrderPrice(orderPrice + foodModel.getFoodPrice());
 		orderModel.getFoodModel().add(foodModel);
 		return new ResponseEntity<OrderModel>(orderRepo.save(orderModel), HttpStatus.ACCEPTED);
 	}
