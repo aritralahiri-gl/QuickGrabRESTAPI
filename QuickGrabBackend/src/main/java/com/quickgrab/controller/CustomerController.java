@@ -3,6 +3,7 @@ package com.quickgrab.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,6 @@ import com.quickgrab.exception.ResourceNotFoundException;
 import com.quickgrab.model.CustomerModel;
 import com.quickgrab.model.FoodModel;
 
-
 import com.quickgrab.service.CustomerService;
 
 @RestController
@@ -25,16 +25,14 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 
-	
-
 	@PostMapping
-	public CustomerModel signUpCustomer(@RequestBody CustomerModel customer) {
+	public ResponseEntity<CustomerModel> signUpCustomer(@RequestBody CustomerModel customer) {
 		return customerService.signUpCustomer(customer);
 	}
 
 	@GetMapping("/foodlist")
 
-	public List<FoodModel> getFood() {
+	public ResponseEntity<List<FoodModel>> getFood() {
 
 		return customerService.getallfood();
 

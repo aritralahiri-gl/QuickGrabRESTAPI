@@ -17,7 +17,7 @@ public class FoodService {
 
 	public ResponseEntity<FoodModel> createFood(FoodModel food) {
 		foodRepo.save(food);
-		return new ResponseEntity<FoodModel>(food, HttpStatus.ACCEPTED);
+		return new ResponseEntity<FoodModel>(food, HttpStatus.CREATED);
 
 	}
 }

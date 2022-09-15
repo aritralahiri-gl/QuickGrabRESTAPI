@@ -3,6 +3,8 @@ package com.quickgrab.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.quickgrab.dto.RestaurantFood;
@@ -13,7 +15,6 @@ import com.quickgrab.model.FoodModel;
 import com.quickgrab.repository.CustomerRepo;
 import com.quickgrab.repository.FoodRepo;
 
-
 @Service
 public class CustomerService {
 
@@ -23,32 +24,29 @@ public class CustomerService {
 
 	private FoodRepo foodRepo;
 
-	
+	public ResponseEntity<CustomerModel> signUpCustomer(CustomerModel customer) {
 
-	public CustomerModel signUpCustomer(CustomerModel customer) {
-
-		return customerRepo.save(customer);
+		return new ResponseEntity<CustomerModel>(customerRepo.save(customer), HttpStatus.CREATED);
 
 	}
 
-	public List<FoodModel> getallfood()
+	public ResponseEntity<List<FoodModel>> getallfood()
 
 	{
-		return foodRepo.findAll();
+		return new ResponseEntity<List<FoodModel>>(foodRepo.findAll(), HttpStatus.CREATED);
+
 	}
 
-	public List<RestaurantFood> getJoinInformation(Integer id) throws ResourceNotFoundException{
+	public   List<RestaurantFood> getJoinInformation(Integer id) throws ResourceNotFoundException {
 
+		if (!customerRepo.existsById(id)) {
 
+			throw new ResourceNotFoundException("Food Id not found");
 
-		 if(!customerRepo.existsById(id)) {
+		}
 
-		  throw new ResourceNotFoundException("Food Id not found");
+		return customerRepo.getJoinInformation(id);
 
-		 }
-
-		 return customerRepo.getJoinInformation(id);
-
-		 }
+	}
 
 }

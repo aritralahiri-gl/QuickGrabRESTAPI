@@ -34,7 +34,7 @@ public class OrderModel {
 	private int quantity;
 	@Column(name = "order_price")
 	private float orderPrice;
-	@OneToMany(cascade = {CascadeType.ALL})
+	@OneToMany(cascade = {CascadeType.DETACH})
 	@JoinColumn(name = "order_id", referencedColumnName = "order_id")
 	private List<FoodModel> foodModel;
 	@Column(name = "cust_id")

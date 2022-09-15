@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.quickgrab.dto.RestaurantOrder;
 import com.quickgrab.exception.ResourceNotFoundException;
 
 import com.quickgrab.model.OrderModel;
@@ -47,17 +48,21 @@ public class OrderController {
 
 	@DeleteMapping("{oid}")
 
-	public OrderModel deleteOrder(@PathVariable Integer oid) throws ResourceNotFoundException {
+	public ResponseEntity<?> deleteOrder(@PathVariable Integer oid) throws ResourceNotFoundException {
 
 		return orderService.deleteOrder(oid);
 
 	}
 
-	// TODO
+	
 
 	@GetMapping("/{restId}")
 
-	public void getOrderByRestId(@PathVariable Integer restId) {
+	public List<RestaurantOrder> getOrderByRestId(@PathVariable Integer restId) throws ResourceNotFoundException {
+
+		List<RestaurantOrder> dataList = orderService.showOrdersById(restId);
+
+		return dataList;
 
 	}
 

@@ -1,5 +1,6 @@
 package com.quickgrab.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,12 +8,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.quickgrab.dto.RestaurantOrder;
 import com.quickgrab.exception.ResourceNotFoundException;
 import com.quickgrab.model.FoodModel;
 import com.quickgrab.model.OrderModel;
 import com.quickgrab.repository.CustomerRepo;
 import com.quickgrab.repository.FoodRepo;
 import com.quickgrab.repository.OrderRepo;
+import com.quickgrab.repository.RestaurantRepo;
 
 @Service
 public class OrderService {
@@ -23,6 +26,8 @@ public class OrderService {
 	private FoodRepo foodRepo;
 	@Autowired
 	private CustomerRepo customerRepo;
+	@Autowired
+	private RestaurantRepo restaurantRepo;
 
 	public ResponseEntity<OrderModel> createOrder(Integer custId, OrderModel orderModel)
 			throws ResourceNotFoundException {
@@ -32,54 +37,54 @@ public class OrderService {
 
 		orderModel.setCustId(custId);
 
-		return new ResponseEntity<OrderModel>(orderRepo.save(orderModel), HttpStatus.ACCEPTED);
+		return new ResponseEntity<OrderModel>(orderRepo.save(orderModel), HttpStatus.CREATED);
 	}
 
 	public ResponseEntity<OrderModel> addFoodToOrder(Integer foodId, Integer orderId) throws ResourceNotFoundException {
 
-		if (!orderRepo.existsById(orderId))
-			throw new ResourceNotFoundException("Order Id not found");
-
-		if (!foodRepo.existsById(foodId))
-			throw new ResourceNotFoundException("Food Id not found");
-
-		OrderModel orderModel = orderRepo.findById(orderId).orElse(null);
-		FoodModel foodModel = foodRepo.findById(foodId).orElse(null);
+		OrderModel orderModel = orderRepo.findById(orderId)
+				.orElseThrow(() -> new ResourceNotFoundException("Order Id Not Found"));
+		FoodModel foodModel = foodRepo.findById(foodId)
+				.orElseThrow(() -> new ResourceNotFoundException("Food Id Not Found"));
 		float orderPrice = orderModel.getOrderPrice();
 		int quantity = orderModel.getQuantity();
 		orderModel.setOrderPrice(orderPrice + foodModel.getFoodPrice());
 		orderModel.getFoodModel().add(foodModel);
 		orderModel.setQuantity(quantity + 1);
-		return new ResponseEntity<OrderModel>(orderRepo.save(orderModel), HttpStatus.ACCEPTED);
+		return new ResponseEntity<OrderModel>(orderRepo.save(orderModel), HttpStatus.CREATED);
 	}
 
 	public ResponseEntity<List<OrderModel>> showAllOrders() {
 
 		List<OrderModel> orderModel = orderRepo.findAll();
 
-		return new ResponseEntity<List<OrderModel>>(orderModel, HttpStatus.ACCEPTED);
+		return new ResponseEntity<List<OrderModel>>(orderModel, HttpStatus.OK);
 	}
 
-	public OrderModel deleteOrder(Integer orderId) throws ResourceNotFoundException {
+	public ResponseEntity<?> deleteOrder(Integer orderId) throws ResourceNotFoundException {
 
 		if (!orderRepo.existsById(orderId)) {
 
 			throw new ResourceNotFoundException("Order Id not found");
 
-		} else {
+		}
+		orderRepo.deleteById(orderId);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
 
-			orderRepo.deleteById(orderId);
+	public List<RestaurantOrder> showOrdersById(Integer restId) throws ResourceNotFoundException {
+
+		if (!restaurantRepo.existsById(restId)) {
+
+			throw new ResourceNotFoundException("Restaurant Id not found");
 
 		}
 
-		return null;
-	}
+		List<RestaurantOrder> list = new ArrayList<>();
+		list.addAll(orderRepo.getOrderRestaurantInfo(restId));
 
-	// TODO
+		return list;
 
-	public void showOrdersById(Integer restId) throws ResourceNotFoundException {
-
-//		return new ResponseEntity<List<OrderModel>>( , HttpStatus.ACCEPTED);
 	}
 
 }
