@@ -25,14 +25,16 @@ public class OrderController {
 	private OrderService orderService;
 
 	@PostMapping("/{cId}")
-	public ResponseEntity<OrderModel> createOrder(@PathVariable Integer cId, @RequestBody OrderModel orderModel) {
+	public ResponseEntity<OrderModel> createOrder(@PathVariable Integer cId, @RequestBody OrderModel orderModel)
+			throws ResourceNotFoundException {
 
 		return orderService.createOrder(cId, orderModel);
 
 	}
 
 	@PostMapping("/{fId}/{oId}")
-	public ResponseEntity<OrderModel> addFoodToOrder(@PathVariable Integer fId, @PathVariable Integer oId) {
+	public ResponseEntity<OrderModel> addFoodToOrder(@PathVariable Integer fId, @PathVariable Integer oId)
+			throws ResourceNotFoundException {
 
 		return orderService.addFoodToOrder(fId, oId);
 
@@ -50,16 +52,13 @@ public class OrderController {
 		return orderService.deleteOrder(oid);
 
 	}
-	
-	
-	//TODO
-	
+
+	// TODO
+
 	@GetMapping("/{restId}")
-	
+
 	public void getOrderByRestId(@PathVariable Integer restId) {
-		
+
 	}
-	
-	
 
 }
