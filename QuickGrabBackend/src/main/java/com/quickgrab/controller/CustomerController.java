@@ -11,10 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.quickgrab.dto.RestaurantFood;
+import com.quickgrab.exception.ResourceNotFoundException;
 import com.quickgrab.model.CustomerModel;
 import com.quickgrab.model.FoodModel;
 
-import com.quickgrab.repository.CustomerRepo;
+
 import com.quickgrab.service.CustomerService;
 
 @RestController
@@ -24,8 +25,7 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 
-	@Autowired
-	private CustomerRepo customerRepo;
+	
 
 	@PostMapping
 	public CustomerModel signUpCustomer(@RequestBody CustomerModel customer) {
@@ -42,7 +42,7 @@ public class CustomerController {
 
 	@GetMapping("/getFood/{id}")
 
-	public List<RestaurantFood> getJointInformation(@PathVariable Integer id) {
+	public List<RestaurantFood> getJointInformation(@PathVariable Integer id) throws ResourceNotFoundException {
 
 		return customerService.getJoinInformation(id);
 

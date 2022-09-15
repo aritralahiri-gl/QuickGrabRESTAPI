@@ -50,5 +50,16 @@ public class OrderController {
 		return orderService.deleteOrder(oid);
 
 	}
+	
+	
+	//TODO
+	
+	@GetMapping("/{restId}")
+	
+	public void getOrderByRestId(@PathVariable Integer restId) {
+		
+	}
+	
+	
 
 }

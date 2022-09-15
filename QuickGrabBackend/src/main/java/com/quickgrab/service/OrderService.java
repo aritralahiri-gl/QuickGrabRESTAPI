@@ -33,8 +33,10 @@ public class OrderService {
 		OrderModel orderModel = orderRepo.findById(orderId).orElse(null);
 		FoodModel foodModel = foodRepo.findById(foodId).orElse(null);
 		float orderPrice = orderModel.getOrderPrice();
+		int quantity = orderModel.getQuantity();
 		orderModel.setOrderPrice(orderPrice + foodModel.getFoodPrice());
 		orderModel.getFoodModel().add(foodModel);
+		orderModel.setQuantity(quantity + 1);
 		return new ResponseEntity<OrderModel>(orderRepo.save(orderModel), HttpStatus.ACCEPTED);
 	}
 
@@ -44,7 +46,6 @@ public class OrderService {
 
 		return new ResponseEntity<List<OrderModel>>(orderModel, HttpStatus.ACCEPTED);
 	}
-
 	public OrderModel deleteOrder(Integer orderId) throws ResourceNotFoundException {
 
 		if (!orderRepo.existsById(orderId)) {
@@ -59,5 +60,18 @@ public class OrderService {
 
 		return null;
 	}
+	
+	
+	
+	
+	//TODO
+	
+	public void showOrdersById(Integer restId) throws ResourceNotFoundException {
+		
+		
+		
+//		return new ResponseEntity<List<OrderModel>>( , HttpStatus.ACCEPTED);
+	}
+	
 
 }

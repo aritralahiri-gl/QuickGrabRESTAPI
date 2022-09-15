@@ -30,7 +30,7 @@ public class RestaurantController {
 	}
 
 	@PostMapping("/food/{id}")
-	public ResponseEntity<RestaurantModel> addFood(@PathVariable Integer id, @RequestBody FoodModel foodModel) {
+	public ResponseEntity<RestaurantModel> addFood(@PathVariable Integer id, @RequestBody FoodModel foodModel) throws ResourceNotFoundException {
 		return restaurantService.addFood(id, foodModel);
 	}
 

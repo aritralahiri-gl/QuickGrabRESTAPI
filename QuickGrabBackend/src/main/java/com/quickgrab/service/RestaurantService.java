@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-
 import com.quickgrab.exception.ResourceNotFoundException;
 import com.quickgrab.model.FoodModel;
 import com.quickgrab.model.RestaurantModel;
@@ -22,8 +21,13 @@ public class RestaurantService {
 	@Autowired
 	private FoodRepo foodRepo;
 
-	public ResponseEntity<RestaurantModel> addFood(Integer id, FoodModel foodModel) {
+	public ResponseEntity<RestaurantModel> addFood(Integer id, FoodModel foodModel) throws ResourceNotFoundException {
 
+		if (!restaurantRepo.existsById(id)) {
+
+			throw new ResourceNotFoundException("Restaurant Id not found");
+
+		}
 		RestaurantModel restaurant = restaurantRepo.findById(id).orElse(null);
 		restaurant.getFoodModel().add(foodModel);
 		foodRepo.save(foodModel);

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.quickgrab.dto.RestaurantFood;
-
+import com.quickgrab.exception.ResourceNotFoundException;
 import com.quickgrab.model.CustomerModel;
 import com.quickgrab.model.FoodModel;
 
@@ -37,11 +37,18 @@ public class CustomerService {
 		return foodRepo.findAll();
 	}
 
+	public List<RestaurantFood> getJoinInformation(Integer id) throws ResourceNotFoundException{
 
-	public List<RestaurantFood> getJoinInformation(Integer id) {
 
-		return customerRepo.getJoinInformation(id);
 
-	}
+		 if(!customerRepo.existsById(id)) {
+
+		  throw new ResourceNotFoundException("Food Id not found");
+
+		 }
+
+		 return customerRepo.getJoinInformation(id);
+
+		 }
 
 }
